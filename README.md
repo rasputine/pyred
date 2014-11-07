@@ -11,7 +11,7 @@ Which will print the newest visible post on /r/funny, which will update every 30
 
 Supports private subreddits that you need to authenticate to look at, like the lounge. Specify your username with -u and your feed key with -f, like the following:
 
-Get your key from your profile preferences, under the RSS tab: [Here](https://www.reddit.com/prefs/feeds/)
+Get your key from your profile preferences, under the RSS tab:[Here](https://www.reddit.com/prefs/feeds/). You may need to enable private feeds under 'content options': [Here](https://www.reddit.com/prefs/).
 
 `#pyred.py -u rasputine -f a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6 centuryclub`
 
