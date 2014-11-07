@@ -1,12 +1,12 @@
 #! /usr/bin/python
-from urllib2 import urlopen
+# author: /u/rasputine
+import urllib2
 from sys import stdout
 from time import sleep
 import json
 import argparse
 import sys
 import os
-
 parser = argparse.ArgumentParser(description="Prints out the newest post from a subreddit.")
 parser.add_argument('subreddit', metavar='C', type=str, nargs='*',
 	help="Specify the subreddit to follow")
@@ -28,9 +28,10 @@ if args['username']:
 	username=str("&user="+args['username'])
 else: username=""
 
+hdr = { 'User-Agent' : 'pyred/1.0 by rasputine' }
 redditurl="{0}www.reddit.com/r/{1}/new/.json?sort=new{2}{3}".format(secure,subreddit,feed,username)
-temp=count=wwwcount=postcount=0
-
+req = urllib2.Request(redditurl, hdr)
+temp=post=""
 def termPad(input_string):
 	columns = int(os.popen('stty size', 'r').read().split()[1])
 	spaces = " "*(columns - len(input_string))
@@ -43,20 +44,14 @@ def termTrim(title, comments):
 
 while True:
 	try:
-		feed = json.loads(urlopen(redditurl,timeout=10).read())
-		wwwcount=0
+		feed = json.loads(urllib2.urlopen(redditurl,timeout=10).read())
 	except:
-		wwwcount+=1
-		stdout.write( termPad("\r- HTTP error - " + str(sys.exc_info()[1]) + " " + str(wwwcount) ) )
-		stdout.flush()
-		sleep(30)
-		continue
+		print( "\r" + str(sys.exc_info()[1]) + " " )
+		break
 	try:
 		jsonpost = feed['data']['children'][0]["data"]
-		postcount=0
 	except:
-		postcount+=1
-		stdout.write( termPad("\r - no new posts - " + str(postcount) ) )
+		stdout.write( termPad("\r - no post - "  ) )
 		stdout.flush()
 		sleep(60)
 		continue
@@ -65,8 +60,7 @@ while True:
 	post = termTrim(jsonpost["title"],comments)
 	if not (temp == pid):
 		temp = pid
-		count=0
-		stdout.write( termPad(post) )
+		stdout.write( post )
 		stdout.flush()
 	if not args['repeat']: break
 	sleep(30)
