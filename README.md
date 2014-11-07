@@ -5,13 +5,13 @@ python script for tracking newest post to a subreddit.
 
 Use as:
 
-#ptyhon pyred.py funny
+`#ptyhon pyred.py funny`
 
 Which will print the newest visible post on /r/funny, which will update every 30 seconds.
 
 Supports private subreddits that you need to authenticate to look at, like the lounge. Specify your username with -u and your feed key with -f, like the following:
 
-#pyred.py -u rasputine -f a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6 centuryclub
+`#pyred.py -u rasputine -f a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6 centuryclub`
 
 ---------
 -1: Diables loop after successful load, will only print one link.
