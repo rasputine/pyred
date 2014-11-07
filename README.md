@@ -5,7 +5,7 @@ python script for tracking newest post to a subreddit.
 
 Use as:
 
-`#ptyhon pyred.py funny`
+`#ptyhon pyred.py merijuanaenthusiasts`
 
 Which will print the newest visible post on /r/funny, which will update every 30 seconds.
 
