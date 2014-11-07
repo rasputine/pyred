@@ -14,6 +14,9 @@ Supports private subreddits that you need to authenticate to look at, like the l
 `#pyred.py -u rasputine -f a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6 centuryclub`
 
 ---------
+
+`usage: pyred.py [-h] [-s] [-1] [-u USERNAME] [-f FEED] [C [C ...]]`
+
 -1: Diables loop after successful load, will only print one link.
 
 -s: Disables https
