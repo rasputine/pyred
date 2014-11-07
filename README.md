@@ -26,4 +26,3 @@ Get your key from your profile preferences, under the RSS tab:[Here](https://www
 -u: Specify username for authentication
 
 -f: Specify feed key for authentication
-
