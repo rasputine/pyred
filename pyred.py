@@ -24,11 +24,9 @@ subreddit=args['subreddit'][0]
 if args['feed']:
 	feed=str("&feed="+args['feed'])
 else: feed=""
-"""c37607578de3f29871ec99158112432bd7a3bfae"""
 if args['username']:
 	username=str("&user="+args['username'])
 else: username=""
-"""rasputine"""
 
 redditurl="{0}www.reddit.com/r/{1}/new/.json?sort=new{2}{3}".format(secure,subreddit,feed,username)
 temp=count=wwwcount=postcount=0
@@ -63,7 +61,7 @@ while True:
 		sleep(60)
 		continue
 	pid = jsonpost["id"]
-	comments = "{0}://www.reddit.com/{1}".format(secure, pid)
+	comments = "{0}www.reddit.com/{1}".format(secure, pid)
 	post = termTrim(jsonpost["title"],comments)
 	if not (temp == pid):
 		temp = pid
