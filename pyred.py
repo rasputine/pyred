@@ -30,8 +30,9 @@ else: username=""
 
 hdr = { 'User-Agent' : 'pyred/1.0 by rasputine' }
 redditurl="{0}www.reddit.com/r/{1}/new/.json?sort=new{2}{3}".format(secure,subreddit,feed,username)
-req = urllib2.Request(redditurl, hdr)
+req = urllib2.Request(redditurl, None, hdr)
 temp=post=""
+
 def termPad(input_string):
 	columns = int(os.popen('stty size', 'r').read().split()[1])
 	spaces = " "*(columns - len(input_string))
@@ -39,15 +40,17 @@ def termPad(input_string):
 
 def termTrim(title, comments):
 	columns = int(os.popen('stty size', 'r').read().split()[1])
-	maxLen = columns - len(comments) + 5
+	maxLen = columns - len(comments) - 3
 	return termPad("\r{0} - {1}".format(title[:maxLen],comments))
 
 while True:
 	try:
-		feed = json.loads(urllib2.urlopen(redditurl,timeout=10).read())
+		feed = json.loads(urllib2.urlopen(req).read())
 	except:
-		print( "\r" + str(sys.exc_info()[1]) + " " )
-		break
+		stdout.write( termPad("\r Error: " + str(sys.exc_info())) )
+		stdout.flush()
+		sleep(60)
+		continue
 	try:
 		jsonpost = feed['data']['children'][0]["data"]
 	except:
