@@ -39,7 +39,10 @@ def termPad(input_string):
 	return "{0}{1}".format(input_string, spaces)
 
 def termTrim(title, comments):
-	columns = int(os.popen('stty size', 'r').read().split()[1])
+	try: 
+		columns = int(os.popen('stty size', 'r').read().split()[1])
+	except:
+		columns = 80
 	maxLen = columns - len(comments) - 3
 	return termPad("\r{0} - {1}".format(title[:maxLen],comments))
 
@@ -49,14 +52,14 @@ while True:
 	except:
 		stdout.write( termPad("\r Error: " + str(sys.exc_info())) )
 		stdout.flush()
-		sleep(60)
+		sleep(30)
 		continue
 	try:
 		jsonpost = feed['data']['children'][0]["data"]
 	except:
-		stdout.write( termPad("\r - no post - "  ) )
+		stdout.write( termPad("\r - No new posts - "  ) )
 		stdout.flush()
-		sleep(60)
+		sleep(10)
 		continue
 	pid = jsonpost["id"]
 	comments = "{0}www.reddit.com/{1}".format(secure, pid)
@@ -66,4 +69,4 @@ while True:
 		stdout.write( post )
 		stdout.flush()
 	if not args['repeat']: break
-	sleep(30)
+	sleep(5)
