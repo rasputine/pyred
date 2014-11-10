@@ -28,6 +28,8 @@ if args['username']:
 	username=str("&user="+args['username'])
 else: username=""
 
+os.system('cls' if os.name == 'nt' else 'clear')
+
 hdr = { 'User-Agent' : 'pyred/1.0 by rasputine' }
 redditurl="{0}www.reddit.com/r/{1}/new/.json?sort=new{2}{3}".format(secure,subreddit,feed,username)
 req = urllib2.Request(redditurl, None, hdr)
