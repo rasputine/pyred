@@ -28,17 +28,19 @@ if args['username']:
 	username=str("&user="+args['username'])
 else: username=""
 
-os.system('cls' if os.name == 'nt' else 'clear')
 
 hdr = { 'User-Agent' : 'pyred/1.0 by rasputine' }
 redditurl="{0}www.reddit.com/r/{1}/new/.json?sort=new{2}{3}".format(secure,subreddit,feed,username)
 req = urllib2.Request(redditurl, None, hdr)
 temp=post=""
 
+def clear():
+	os.system('cls' if os.name == 'nt' else 'clear')
+
 def termPad(input_string):
 	columns = int(os.popen('stty size', 'r').read().split()[1])
 	spaces = " "*(columns - len(input_string))
-	return "{0}{1}".format(input_string, spaces)
+	return u"{0}{1}".format(input_string, spaces)
 
 def termTrim(title, comments):
 	try: 
@@ -46,12 +48,13 @@ def termTrim(title, comments):
 	except:
 		columns = 80
 	maxLen = columns - len(comments) - 3
-	return termPad("\r{0} - {1}".format(title[:maxLen],comments))
-
+	return termPad(u"\r{0} - {1}".format(title[:maxLen],comments))
+clear()
 while True:
 	try:
 		feed = json.loads(urllib2.urlopen(req).read())
 	except:
+		clear()
 		stdout.write( termPad("\r Error: " + str(sys.exc_info())) )
 		stdout.flush()
 		sleep(30)
@@ -59,15 +62,17 @@ while True:
 	try:
 		jsonpost = feed['data']['children'][0]["data"]
 	except:
+		clear()
 		stdout.write( termPad("\r - No new posts - "  ) )
 		stdout.flush()
-		sleep(10)
+		sleep(2)
 		continue
 	pid = jsonpost["id"]
 	comments = "{0}www.reddit.com/{1}".format(secure, pid)
 	post = termTrim(jsonpost["title"],comments)
 	if not (temp == pid):
 		temp = pid
+		clear()
 		stdout.write( post )
 		stdout.flush()
 	if not args['repeat']: break
