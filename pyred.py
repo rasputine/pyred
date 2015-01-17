@@ -17,6 +17,7 @@ parser.add_argument('-1','--once', dest='repeat', action='store_const',
 parser.add_argument('-u', '--user', dest='username', default=None)
 parser.add_argument('-f', '--feed', dest='feed', default=None)
 args = vars(parser.parse_args())
+delay=2
 
 secure=args['secure']
 subreddit=args['subreddit'][0]
@@ -57,7 +58,7 @@ while True:
 		clear()
 		stdout.write( termPad("\r Error: " + str(sys.exc_info())) )
 		stdout.flush()
-		sleep(30)
+		sleep(delay)
 		continue
 	try:
 		jsonpost = feed['data']['children'][0]["data"]
@@ -65,7 +66,7 @@ while True:
 		clear()
 		stdout.write( termPad("\r - No new posts - "  ) )
 		stdout.flush()
-		sleep(2)
+		sleep(delay)
 		continue
 	pid = jsonpost["id"]
 	comments = "{0}www.reddit.com/{1}".format(secure, pid)
@@ -76,4 +77,4 @@ while True:
 		stdout.write( post )
 		stdout.flush()
 	if not args['repeat']: break
-	sleep(5)
+	sleep(delay)
