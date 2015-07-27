@@ -1,4 +1,4 @@
-    #! /usr/bin/python
+#! /usr/bin/python
 # author: /u/rasputine
 import urllib2
 from sys import stdout
@@ -81,6 +81,7 @@ while True:
         clear()
         stdout.write( post )
         stdout.flush()
+        print '\a'
     if not args['repeat']: break
     sleep(delay
     	)
