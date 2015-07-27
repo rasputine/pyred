@@ -56,6 +56,7 @@ def termTrim(title, comments, age):
     return termPad(u"\r{0} - {1} {2}".format(title[:maxLen],comments, age))
 clear()
 while True:
+<<<<<<< HEAD
     try:
         feed = json.loads(urllib2.urlopen(req).read())
     except:
@@ -85,3 +86,31 @@ while True:
     if not args['repeat']: break
     sleep(delay
     	)
+=======
+	try:
+		feed = json.loads(urllib2.urlopen(req).read())
+	except:
+		clear()
+		stdout.write( termPad("\r Error: " + str(sys.exc_info())) )
+		stdout.flush()
+		sleep(delay)
+		continue
+	try:
+		jsonpost = feed['data']['children'][0]["data"]
+	except:
+		clear()
+		stdout.write( termPad("\r - No new posts - "  ) )
+		stdout.flush()
+		sleep(delay)
+		continue
+	pid = jsonpost["id"]
+	comments = "{0}www.reddit.com/{1}".format(secure, pid)
+	post = termTrim(jsonpost["title"],comments)
+	if not (temp == pid):
+		temp = pid
+		clear()
+		stdout.write( post )
+		stdout.flush()
+	if not args['repeat']: break
+	sleep(delay)
+>>>>>>> ce7fe07b1c2f354e974d86b5210c1c56ca4c1ee9
