@@ -52,7 +52,7 @@ def termTrim(title, comments, age):
         columns = int(os.popen('stty size', 'r').read().split()[1])
     except:
         columns = 80
-    maxLen = columns - len(comments) - 3
+    maxLen = columns - len(comments) - len(age) - 4
     return termPad(u"\r{0} - {1} {2}".format(title[:maxLen],comments, age))
 clear()
 while True:
@@ -73,15 +73,14 @@ while True:
         sleep(delay)
         continue
     pid = jsonpost["id"]
-    age = datetime.now() - datetime.fromtimestamp(jsonpost["created_utc"])
+    delta = datetime.now() - datetime.fromtimestamp(jsonpost["created_utc"])
     comments = "{0}www.reddit.com/{1}".format(secure, pid)
-    post = termTrim(jsonpost["title"],comments, age)
+    post = termTrim(jsonpost["title"],comments, str(delta)[:-7])
     if not (temp == pid):
         temp = pid
         clear()
-        stdout.write( post )
+        stdout.write( post + '\a')
         stdout.flush()
-        print '\a'
     if not args['repeat']: break
     sleep(delay
     	)
